@@ -1,0 +1,49 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.ciaranbyrne.corkd.activity.AddFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+    <TextView
+        android:id="@+id/lblAddHeading"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="40dp"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:textSize="45sp"
+        android:text="@string/new_wine"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:text="@string/take_a_photo_of_the_wine_label_and_add_a_review_once_done"
+        android:textSize="20sp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvAddNewMsg"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/lblAddHeading"
+        android:textAlignment="center" />
+
+    <ImageView
+        android:layout_width="240dp"
+        android:layout_height="240dp"
+        app:srcCompat="@mipmap/ic_launcher"
+        android:id="@+id/ivAddWine"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:text="@string/take_photo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ivAddWine"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="29dp"
+        android:id="@+id/btnCam" />
+
+</RelativeLayout>
