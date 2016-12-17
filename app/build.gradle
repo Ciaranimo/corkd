@@ -4,7 +4,7 @@ android {
     compileSdkVersion 24
     buildToolsVersion "25.0.1"
     defaultConfig {
-        applicationId "com.ciaranbyrne.materialdesign"
+        applicationId "com.ciaranbyrne.corkd"
         minSdkVersion 21
         targetSdkVersion 24
         versionCode 1

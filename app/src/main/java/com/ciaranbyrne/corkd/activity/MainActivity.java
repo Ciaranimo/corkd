@@ -20,6 +20,10 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
 
     private Toolbar mToolbar;
     private FragmentDrawer drawerFragment;
+    private FragmentManager manager;
+
+    Wine wine = new Wine();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,7 +79,7 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
 
     private void displayView(int position) {
         Fragment fragment = null;
-        String title = getString(R.string.app_name); //CHANGE THIS
+        String title = getString(R.string.app_name);
         switch (position) {
             case 0:
                 fragment = new HomeFragment();
@@ -104,5 +108,10 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
             // set the toolbar title
             getSupportActionBar().setTitle(title);
         }
+    }
+
+
+    public void saveData(View view) {
+        Wine wine = new Wine();
     }
 }

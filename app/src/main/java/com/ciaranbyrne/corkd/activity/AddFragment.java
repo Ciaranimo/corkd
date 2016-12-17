@@ -1,40 +1,27 @@
 package com.ciaranbyrne.corkd.activity;
 
-import android.Manifest;
 import android.app.Activity;
-import android.content.Context;
-import android.content.Intent;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.provider.MediaStore;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.Toast;
+import android.widget.EditText;
+import android.widget.Spinner;
 
 import com.ciaranbyrne.corkd.R;
 
-import java.util.List;
-
-import static android.app.Activity.RESULT_OK;
-
 
 public class AddFragment extends Fragment {
-    List<PackageInfo> packs = getActivity().getPackageManager().getInstalledPackages(0);
 
+    String[] wineTypes = {"Cabernet Sauvignon","Merlot","Shiraz","Pinot Noir","Chardonay","Sauvignon Blanc","Riesling","Muscat"};
 
-    //request codes and thumbnail instantiated
-    static final int REQUEST_IMAGE_CAPTURE = 1;
-    static final int MY_PERMISSIONS_REQUEST_CAMERA = 2;
-    private ImageView ivThummbnail;
-    private Context context;
+    DBHandler db = new DBHandler(getActivity()); //instantiating the database handler
+
+    private EditText etWineName;
 
     public AddFragment() {
         // Required empty public constructor
@@ -44,7 +31,6 @@ public class AddFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
     }
 
     @Override
@@ -52,31 +38,46 @@ public class AddFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_add, container, false);
 
-        super.onCreate(savedInstanceState);
+        final Spinner spinnerWineType = (Spinner)rootView.findViewById(R.id.spinnerWineType);
 
 
-        //Button for cam - had to change for on create view
 
-        Button bCam = (Button) getView().findViewById(R.id.btnCam); //btn that will activate cam
-        ivThummbnail = (ImageView) getView().findViewById(R.id.ivAddWine); //declare thumbnail to show taken photo
-        bCam.setOnClickListener(new View.OnClickListener() { //set listener for btn press
+        //wine spinner
+        ArrayAdapter<String> wineAdapterForSpinner = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, wineTypes);
+
+        spinnerWineType.setAdapter((wineAdapterForSpinner));
+
+        spinnerWineType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onClick(View v) {
-                takePicture();
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                //Toast.makeText(getActivity().getApplicationContext(),"Spinner day selected: \n"+adapterView.getItemAtPosition(i), Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+        etWineName = (EditText) rootView.findViewById(R.id.etWineName);
+
+
+        //add wine
+        Button btnAddWine = (Button) rootView.findViewById(R.id.btnAddWine);
+        btnAddWine.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String wine = etWineName.getText().toString();
+                String type = spinnerWineType.getSelectedItem().toString();
+                db.addWine(new Wine(0, wine, type)); //adding wine
             }
         });
 
 
 
-
-
-
         // Inflate the layout for this fragment
         return rootView;
-
     }
-
-
 
     @Override
     public void onAttach(Activity activity) {
@@ -87,48 +88,4 @@ public class AddFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
     }
-
-//Camera stuff.....
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) { //requestCode, which request we're responding to, resultCode,
-        // all is well, data, the image in this case
-        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {//if correct request and all is well
-            Bundle extras = data.getExtras(); //get the image
-            Bitmap imageBitmap = (Bitmap) extras.get("data"); //get the image
-            ivThummbnail.setImageBitmap(imageBitmap); //set image to thumbnail
-        }
-    }
-    private void cameraIntentCode() {
-        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE); //intent to take the picture
-        if (takePictureIntent.resolveActivity(getPackageManager()) != null) { //resolveActivity returns first activity component that can handle the intent
-            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE); //should start only if there's an app that can handle the intent (has a camera)
-        } //next up to onActivityResult
-    }
-
-    private void takePicture() {
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) { //if all's not good
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, MY_PERMISSIONS_REQUEST_CAMERA); //do this
-        } else {
-            cameraIntentCode(); //otherwise go on to this method (1 above)
-        }
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
-        switch (requestCode) {
-            case MY_PERMISSIONS_REQUEST_CAMERA: {
-                // If request is cancelled, the result arrays are empty.
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    // permission was granted
-                    cameraIntentCode();
-                } else {
-                    // permission deniedDisable the
-                    // functionality that depends on this permission.
-                }
-                return;
-            }
-        }
-    }
-
 }

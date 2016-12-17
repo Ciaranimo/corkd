@@ -18,7 +18,7 @@
         android:textStyle="bold"/>
 
     <TextView
-        android:text="@string/take_a_photo_of_the_wine_label_and_add_a_review_once_done"
+        android:text="Add your wine review below"
         android:textSize="20sp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
@@ -29,21 +29,64 @@
         android:layout_below="@+id/lblAddHeading"
         android:textAlignment="center" />
 
-    <ImageView
-        android:layout_width="240dp"
-        android:layout_height="240dp"
-        app:srcCompat="@mipmap/ic_launcher"
-        android:id="@+id/ivAddWine"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
-
     <Button
-        android:text="@string/take_photo"
+        android:text="@string/add_wine"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/ivAddWine"
+        android:id="@+id/btnAddWine"
+        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="29dp"
-        android:id="@+id/btnCam" />
+        android:layout_marginBottom="102dp"
+        android:onClick="saveData"/>
+
+    <RatingBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="52dp"
+        android:id="@+id/ratingBar"
+        android:layout_below="@+id/tvAddNewMsg"
+        android:layout_alignEnd="@+id/tvAddNewMsg" />
+
+    <TextView
+        android:text="Rating"
+        android:textSize="28sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/tvRating"
+        android:layout_below="@+id/tvAddNewMsg"
+        android:layout_alignEnd="@+id/btnAddWine" />
+
+    <TextView
+        android:text="Wine Type"
+        android:textSize="28sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvWineType"
+        android:layout_below="@+id/ratingBar"
+        android:layout_centerHorizontal="true" />
+
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/spinnerWineType"
+        android:layout_below="@id/tvWineType"/>
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:textSize="28sp"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:hint="@string/enter_wine_name"
+        android:ems="10"
+        android:layout_marginTop="15dp"
+        android:id="@+id/etWineName"
+        android:layout_below="@+id/spinnerWineType"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="21dp"
+        android:textAlignment="center" />
 
 </RelativeLayout>

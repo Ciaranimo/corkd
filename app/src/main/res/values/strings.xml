@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Material Design</string>
+    <string name="app_name">Corkd</string>
     <string name="action_settings">Settings</string>
     <string name="action_search">Search</string>
     <string name="drawer_open">Open</string>
@@ -28,4 +28,7 @@
     <string name="new_wine">New wine</string>
     <string name="take_a_photo_of_the_wine_label_and_add_a_review_once_done">Take a photo of the wine label and add a review once done</string>
     <string name="take_photo">Take Photo</string>
+    <string name="add_wine">Add Wine</string>
+    <string name="enter_wine_name">Enter Wine Name...</string>
+    <string name="call_wine_club">Call Wine Club</string>
 </resources>
