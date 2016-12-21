@@ -32,9 +32,18 @@
         android:text="@string/call_wine_club"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="157dp"
+        android:id="@+id/btnCallWineClub"
         android:layout_below="@+id/lblWelcomeMsg"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:text="@string/text_wine_club"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btnCallWineClub"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="155dp"
-        android:id="@+id/btnCallWineClub" />
+        android:layout_marginTop="30dp"
+        android:id="@+id/btnTextWineClub" />
 
 </RelativeLayout>

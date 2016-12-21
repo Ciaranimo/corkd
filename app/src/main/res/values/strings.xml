@@ -31,4 +31,6 @@
     <string name="add_wine">Add Wine</string>
     <string name="enter_wine_name">Enter Wine Name...</string>
     <string name="call_wine_club">Call Wine Club</string>
+    <string name="wine_list">Wine List</string>
+    <string name="text_wine_club">Text Wine Club</string>
 </resources>

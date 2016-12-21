@@ -58,7 +58,7 @@ public class DBHandler extends SQLiteOpenHelper {
         db.insert(TABLE_WINES, null, values);
         db.close(); // Closing database connection
     }
-    // Getting one shop
+    // Getting one wine
     public Wine getWine(int id) {
         SQLiteDatabase db = this.getReadableDatabase();
 
@@ -70,12 +70,12 @@ public class DBHandler extends SQLiteOpenHelper {
 
         Wine contact = new Wine(Integer.parseInt(cursor.getString(0)),
                 cursor.getString(1), (cursor.getString(2)));
-// return shop
+// return wine
         return contact;
     }
     // Getting All Wines
     public List<Wine> getAllWines() {
-        List<Wine> shopList = new ArrayList<Wine>();
+        List<Wine> wineList = new ArrayList<Wine>();
 // Select All Query
         String selectQuery = "SELECT * FROM" + TABLE_WINES;
 
@@ -86,17 +86,17 @@ public class DBHandler extends SQLiteOpenHelper {
 // looping through all rows and adding to list
         if (cursor.moveToFirst()) {
             do {
-                Wine shop = new Wine();
-                shop.setId(Integer.parseInt(cursor.getString(0)));
-                shop.setName(cursor.getString(1));
-                shop.setType(cursor.getString(2));
-// Adding contact to list
-                shopList.add(shop);
+                Wine wine = new Wine();
+                wine.setId(Integer.parseInt(cursor.getString(0)));
+                wine.setName(cursor.getString(1));
+                wine.setType(cursor.getString(2));
+// Adding wine to list
+                wineList.add(wine);
             } while (cursor.moveToNext());
         }
 
 // return contact list
-        return shopList;
+        return wineList;
     }
     // Getting wines Count
     public int getWinesCount() {
@@ -109,23 +109,23 @@ public class DBHandler extends SQLiteOpenHelper {
         return cursor.getCount();
     }
     // Updating a wine
-    public int updateWine(Wine shop) {
+    public int updateWine(Wine wine) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        values.put(KEY_NAME, shop.getName());
-        values.put(KEY_TYPE, shop.getType());
+        values.put(KEY_NAME, wine.getName());
+        values.put(KEY_TYPE, wine.getType());
 
 // updating row
         return db.update(TABLE_WINES, values, KEY_ID + " = ?",
-        new String[]{String.valueOf(shop.getId())});
+        new String[]{String.valueOf(wine.getId())});
     }
 
-    // Deleting a shop
-    public void deleteWine(Wine shop) {
+    // Deleting a wine
+    public void deleteWine(Wine wine) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TABLE_WINES, KEY_ID + " = ?",
-        new String[] { String.valueOf(shop.getId()) });
+        new String[] { String.valueOf(wine.getId()) });
         db.close();
     }
 }

@@ -1,8 +1,8 @@
 package com.ciaranbyrne.corkd.activity;
 
 import android.app.Activity;
-import android.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +11,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.ciaranbyrne.corkd.R;
 
@@ -22,15 +23,6 @@ public class AddFragment extends Fragment {
     DBHandler db = new DBHandler(getActivity()); //instantiating the database handler
 
     private EditText etWineName;
-
-    OnWineAddedListener mCallback;
-
-
-    // Container Activity must implement this interface
-    public interface OnWineAddedListener {
-        public void onWineAdded(String wine);
-    }
-
 
     public AddFragment() {
         // Required empty public constructor
@@ -71,14 +63,18 @@ public class AddFragment extends Fragment {
         etWineName = (EditText) rootView.findViewById(R.id.etWineName);
 
 
-        //add wine
-        Button btnAddWine = (Button) rootView.findViewById(R.id.btnAddWine);
+        //add wine - curently causes app to crash
+        Button btnAddWine;
+        btnAddWine = (Button) rootView.findViewById(R.id.btnAddWine);
         btnAddWine.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String wine = etWineName.getText().toString();
                 String type = spinnerWineType.getSelectedItem().toString();
                 db.addWine(new Wine(0, wine, type)); //adding wine
+
+                Toast.makeText(getActivity().getApplicationContext(),"Wine "+wine + " Added", Toast.LENGTH_SHORT).show();
+
             }
         });
 
@@ -91,24 +87,6 @@ public class AddFragment extends Fragment {
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-
-
-        // This makes sure that the container activity has implemented
-        // code from - https://developer.android.com/training/basics/fragments/communicating.html
-        // the callback interface. If not, it throws an exception
-        try {
-            mCallback = (OnWineAddedListener) activity;
-        } catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString()
-                    + " must implement OnWineaAddedListener");
-        }
-    }
-
-    private void sendData(){
-        String wineName = etWineName.getText().toString();
-
-        OnWineAddedListener wineAddedListener = (OnWineAddedListener) getActivity();
-        wineAddedListener.onWineAdded(wineName);
     }
 
     @Override
