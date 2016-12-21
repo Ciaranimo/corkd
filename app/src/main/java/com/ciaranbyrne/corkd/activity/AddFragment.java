@@ -1,8 +1,8 @@
 package com.ciaranbyrne.corkd.activity;
 
 import android.app.Activity;
+import android.app.Fragment;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +22,15 @@ public class AddFragment extends Fragment {
     DBHandler db = new DBHandler(getActivity()); //instantiating the database handler
 
     private EditText etWineName;
+
+    OnWineAddedListener mCallback;
+
+
+    // Container Activity must implement this interface
+    public interface OnWineAddedListener {
+        public void onWineAdded(String wine);
+    }
+
 
     public AddFragment() {
         // Required empty public constructor
@@ -82,6 +91,24 @@ public class AddFragment extends Fragment {
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
+
+
+        // This makes sure that the container activity has implemented
+        // code from - https://developer.android.com/training/basics/fragments/communicating.html
+        // the callback interface. If not, it throws an exception
+        try {
+            mCallback = (OnWineAddedListener) activity;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(activity.toString()
+                    + " must implement OnWineaAddedListener");
+        }
+    }
+
+    private void sendData(){
+        String wineName = etWineName.getText().toString();
+
+        OnWineAddedListener wineAddedListener = (OnWineAddedListener) getActivity();
+        wineAddedListener.onWineAdded(wineName);
     }
 
     @Override
